@@ -9,6 +9,7 @@ black = "*"
 ruff = "*"
 pre-commit = "*"
 mypy = "*"
+commitizen = "*"
 
 [dev-packages]
 
