@@ -4,7 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "~=4.2.2"
+django = "*"
+black = "*"
+ruff = "*"
+pre-commit = "*"
+mypy = "*"
 commitizen = "*"
 
 [dev-packages]
