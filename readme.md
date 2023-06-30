@@ -43,7 +43,7 @@ Default git install directory is: `C:\Program Files\Git`
 
     `git clone https://github.com/datasift/gitflow hubflow`
 2. run the following commands
-        
+
  ```
 cd hubflow
 
