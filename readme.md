@@ -7,7 +7,7 @@ Realty with Ease is a fully featured web application that aims to solve Real Est
 
 - [Django v4.2.2](https://www.djangoproject.com/)
 - [Python v 3.11.4](https://www.python.org/)
-- [PostgreSQL 15](https://www.postgresql.org/)
+- [PostgresQL 15](https://www.postgresql.org/)
 - [Pipenv](https://pypi.org/project/pipenv/)
 
 <br>
@@ -24,12 +24,12 @@ Realty with Ease is a fully featured web application that aims to solve Real Est
 - Start up the project using the command, `python manage.py runserver`
 - You should now be able to access the server via the endpoint URL - **[http://localhost:8000](http://localhost:800)**
 
-
 <br>
 
 # Version Control Management
 
-The codebase is managed using GIT, and the branch management philosophy is a hybrid of Gitflow called HubFlow. HubFlow seeks to integrate a seamless workflow where teams can utilize GitFlow against the GitHub Online Infrastructure.
+The codebase is managed using GIT, and the branch management philosophy is a hybrid of Gitflow called HubFlow. HubFlow
+seeks to integrate a seamless workflow where teams can utilize GitFlow against the GitHub Online Infrastructure.
 
 ## HubFlow Installation
 
@@ -41,7 +41,7 @@ Default git install directory is: `C:\Program Files\Git`
 
 1. Clone hubflow into a convenient location
 
-    `git clone https://github.com/datasift/gitflow hubflow`
+   `git clone https://github.com/datasift/gitflow hubflow`
 2. run the following commands
 
  ```
@@ -56,7 +56,8 @@ cp shFlags/src/shflags "C:\Program Files\Git\cmd\hubflow-shFlags"
 
 ### Mac or Linux Based
 
-To install HubFlow on your local machine, you can run the following commands anywhere on your machine outside the project folder
+To install HubFlow on your local machine, you can run the following commands anywhere on your machine outside the
+project folder
 
 ```
 git clone https://github.com/datasift/gitflow
@@ -82,11 +83,13 @@ git hf init -af
 Populate the necessary values i.e.
 
 - `main` branch for the most stable version of the project that can be deployed to production.
-- `dev` branch for development which acts as the base branch for all feature development.
-- `feature` branch for implementing new features and serves to isolate development without disrupting the stability of the codebase
+- `develop` branch for development which acts as the base branch for all feature development.
+- `feature` branch for implementing new features and serves to isolate development without disrupting the stability of
+  the codebase
 - `release` branch for features that are ready to be deployed. Only bug fixes and docs should be added to this branch
 - `hotfix` branch for quickly fixing critical issues/bugs in the main branch that require an immediate patch.
-- `support`branch for long-lived branches that are aimed at maintaining older versions of the codebase no longer actively being developed
+- `support`branch for long-lived branches that are aimed at maintaining older versions of the codebase no longer
+  actively being developed
 - `version` prefix tag is used to uniquely identify releases, this should be left **BLANK** with no values in it.\
 
 ### 2. Create a feature branch
@@ -107,7 +110,9 @@ git hf feature checkout <FEATURE_BRANCH_NAME>
 git hf push
 ```
 
-Once you have completed your feature implementation, initiate a pull request on the GitHub Repository from your `feature` branch into the `dev` branch, only after your PR has been merged into `dev` can you close out the feature branch locally on your machine. This is called a **FEATURE FINISH**
+Once you have completed your feature implementation, initiate a pull request on the GitHub Repository from
+your `feature` branch into the `dev` branch, only after your PR has been merged into `dev` can you close out the feature
+branch locally on your machine. This is called a **FEATURE FINISH**
 
 ### 4. Finish the feature branch
 
@@ -123,15 +128,21 @@ For more details about the other commands, visit - https://datasift.github.io/gi
 
 # Release Strategy
 
-After successfully merging a feature, initiating a release is necessary. The release strategy must align with the various contexts existing within the codebase, such as the Client, Admin, and Public API. If the feature belongs to a sprint, the semantic versioning patch point should be incremented. If the sprint is completed, the semantic versioning minor point must be updated. For example:
+After successfully merging a feature, initiating a release is necessary. The release strategy must align with the
+various contexts existing within the codebase, such as the Client, Admin, and Public API. If the feature belongs to a
+sprint, the semantic versioning patch point should be incremented. If the sprint is completed, the semantic versioning
+minor point must be updated. For example:
 
 - Client - `client@v1.0.0`
 - Admin - `admin@v1.0.1`
 
-For each release, the environment variable called `CURRENT_PROJECT_RELEASE` in the `.env` and `.env.example` files as well as the version number in the `package.json` file should be updated. The value should align with the release based on the context, for example:
+For each release, the environment variable called `CURRENT_PROJECT_RELEASE` in the `.env` and `.env.example` files as
+well as the version number in the `package.json` file should be updated. The value should align with the release based
+on the context, for example:
 
 `CURRENT_PROJECT_RELEASE = 'client@v1.0.2'`
 
 `"version": "1.0.2"`
 
-This provides better visibility into regression testing for our releases and enables us to track any issues with a specific release via Sentry.
+This provides better visibility into regression testing for our releases and enables us to track any issues with a
+specific release via Sentry.
