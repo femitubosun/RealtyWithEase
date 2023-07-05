@@ -15,7 +15,7 @@ SECRET_KEY = BusinessConfig.SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = BusinessConfig.DEBUG
 
-ALLOWED_HOSTS: List[str] = []
+ALLOWED_HOSTS: List[str] = ["*"]
 
 # Application definition
 
@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "user_management",
+    "core",
 ]
 
 MIDDLEWARE = [
