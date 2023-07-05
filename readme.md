@@ -83,7 +83,7 @@ git hf init -af
 Populate the necessary values i.e.
 
 - `main` branch for the most stable version of the project that can be deployed to production.
-- `dev` branch for development which acts as the base branch for all feature development.
+- `develop` branch for development which acts as the base branch for all feature development.
 - `feature` branch for implementing new features and serves to isolate development without disrupting the stability of
   the codebase
 - `release` branch for features that are ready to be deployed. Only bug fixes and docs should be added to this branch
