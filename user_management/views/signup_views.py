@@ -27,7 +27,7 @@ def sign_up_as_tenant(request):
             password = filled_signup_form.cleaned_data['password']
             gender = filled_signup_form.cleaned_data['gender']
 
-            created_user = User.create_tenant_user(email, password, first_name=first_name, last_name=last_name)
+            created_user = User.create_user(email, password, first_name=first_name, last_name=last_name)
             UserProfile.objects.create(user=created_user, gender=gender, is_tenant=True)
 
             return render(request, "user_management/signup/tenant_signup.html", {"form": form})
