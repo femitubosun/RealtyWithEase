@@ -1,8 +1,11 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
+
+from config import BusinessConfig
 
 
 def generate_future_date_time(
-    weeks: int = 0, days: int = 0, hours: int = 0, minutes: int = 0, seconds: int = 0
+        weeks: int = 0, days: int = 0, hours: int = 0,
+        minutes: int = 0, seconds: int = 0
 ):
     """
     Generates a future datetime from the current datetime.
@@ -15,6 +18,6 @@ def generate_future_date_time(
 
     Author: ƒa†3
     """
-    return datetime.now() + timedelta(
+    return BusinessConfig.get_current_date_time() + timedelta(
         weeks=weeks, days=days, hours=hours, minutes=minutes, seconds=seconds
     )

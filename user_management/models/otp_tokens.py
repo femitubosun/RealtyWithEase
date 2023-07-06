@@ -24,7 +24,7 @@ class OtpToken(BaseModel):
     def save(self, *args, **kwargs):
         # Add expiration time before saving
         self.expires_at = self.expires_at = generate_future_date_time(
-            BusinessConfig.OTP_TOKEN.EXPIRES_IN_MINUTES
+            minutes=BusinessConfig.OTP_TOKEN.EXPIRES_IN_MINUTES
         )
 
         super().save(*args, **kwargs)

@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from django.utils import timezone
 
 
 class OtpTokenConfig:
@@ -7,8 +8,8 @@ class OtpTokenConfig:
     Otp Token Configuration
     """
 
-    LENGTH = int(os.getenv("TOKEN_LENGTH") or "7")
-    EXPIRES_IN_MINUTES = int(os.getenv("OTP_TOKEN_EXPIRES_IN") or "10")
+    LENGTH = int(os.getenv("TOKEN_LENGTH") or "6")
+    EXPIRES_IN_MINUTES = int(os.getenv("OTP_TOKEN_EXPIRES_IN_MINUTES") or "10")
 
 
 class BusinessConfig:
@@ -18,5 +19,5 @@ class BusinessConfig:
     OTP_TOKEN = OtpTokenConfig
 
     @staticmethod
-    def get_current_date_time(self):
-        return datetime.now()
+    def get_current_date_time():
+        return datetime.now().replace(tzinfo=timezone.get_current_timezone())
