@@ -39,9 +39,9 @@ class User(AbstractUser):
     has_verified_email = models.BooleanField(default=False)
 
     @staticmethod
-    def create_tenant_user(email: str, password: str, **extra_fields) -> "User":
+    def create_user(email: str, password: str, **extra_fields) -> "User":
         """
-        Create a tenant user
+        Create a user
         :param email: User unique Email
         :param password: User plain Password
         :param extra_fields: Other fields
