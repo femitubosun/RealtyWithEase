@@ -112,3 +112,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Set Custom User Model as Auth Model
+AUTH_USER_MODEL = "user_management.User"
+
+# Custom Authentication Backend
+AUTHENTICATION_BACKENDS = ["user_management.backends.EmailBackend"]
