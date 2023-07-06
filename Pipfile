@@ -10,6 +10,10 @@ ruff = "*"
 pre-commit = "*"
 mypy = "*"
 commitizen = "*"
+dotenv-linter = "*"
+python-dotenv = "*"
+psycopg2-binary = "*"
+validator = "*"
 
 [dev-packages]
 
