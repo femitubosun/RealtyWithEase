@@ -1,6 +1,6 @@
 # Realty With Ease
 
-Realty with Ease is a fully featured web application that aims to solve Real Estate problems in the Nigerian Space
+Realty with Ease is a fully featured web application that aims to automated solutions to Real Estate problems in the Nigerian Space
 <br>
 
 # Project Pre-requisites
@@ -42,9 +42,10 @@ Default git install directory is: `C:\Program Files\Git`
 1. Clone hubflow into a convenient location
 
    `git clone https://github.com/datasift/gitflow hubflow`
+
 2. run the following commands
 
- ```
+```
 cd hubflow
 
 cp git-hf* "C:\Program Files\Git\cmd\"
@@ -52,7 +53,7 @@ cp hubflow-common "C:\Program Files\Git\cmd\"
 
 git submodule update --remote --init --checkout
 cp shFlags/src/shflags "C:\Program Files\Git\cmd\hubflow-shFlags"
- ```
+```
 
 ### Mac or Linux Based
 
