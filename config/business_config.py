@@ -12,11 +12,17 @@ class OtpTokenConfig:
     EXPIRES_IN_MINUTES = Env.get('OTP_TOKEN_EXPIRES_IN_MINUTES')
 
 
+class JwtConfig:
+    EXPIRES_IN_MINUTES = Env.get('JWT_TOKEN_EXPIRES_IN_MINUTES')
+
+
 class BusinessConfig:
     DEBUG = Env.get('DEBUG')
     SECRET = Env.get('SECRET_KEY')
 
     OTP_TOKEN = OtpTokenConfig
+
+    JWT = JwtConfig
 
     @staticmethod
     def get_current_date_time():

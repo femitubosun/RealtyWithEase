@@ -1,9 +1,11 @@
 from django.shortcuts import render
 
+from common.decorators.jwt_required import jwt_required
 from user_management.forms import TenantSignupForm, AgentSignupForm, LandlordSignupForm
 from user_management.models import User, UserProfile
 
 
+@jwt_required
 def sign_up_as_tenant(request):
     """
     This method handles request to signup up a tenant
