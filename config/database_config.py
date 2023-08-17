@@ -1,9 +1,9 @@
-import os
+from envguardian import Env
 
 
 class DatabaseConfig:
-    DATABASE_NAME = os.getenv("DATABASE_NAME")
-    DATABASE_USER = os.getenv("DATABASE_USER")
-    DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
-    DATABASE_HOST = os.getenv("DATABASE_HOST")
-    DATABASE_PORT = os.getenv("DATABASE_PORT")
+    DATABASE_NAME = Env.get("DATABASE_NAME")
+    DATABASE_USER = Env.get("DATABASE_USER")
+    DATABASE_PASSWORD = Env.get("DATABASE_PASSWORD")
+    DATABASE_HOST = Env.get("DATABASE_HOST")
+    DATABASE_PORT = Env.get("DATABASE_PORT")

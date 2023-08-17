@@ -14,6 +14,10 @@ dotenv-linter = "*"
 python-dotenv = "*"
 psycopg2-binary = "*"
 envguardian = "*"
+pyjwt = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
 
 [dev-packages]
 
