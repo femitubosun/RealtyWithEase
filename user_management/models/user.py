@@ -1,7 +1,6 @@
 import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import BaseUserManager, PermissionsMixin
 from django.db import models
 
@@ -35,8 +34,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     This defines the custom User model for the project
     """
-    email = models.EmailField(max_length=255, unique=True)
+
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    email = models.EmailField(max_length=255, unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     is_active = models.BooleanField(default=False)
@@ -54,23 +56,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return True
 
-    @staticmethod
-    def create_user(email: str, password: str, **extra_fields) -> "User":
-        """
-        Create a user
-        :param email: User unique Email
-        :param password: User plain Password
-        :param extra_fields: Other fields
-        :return:
-        """
-
-        if not email or not password:
-            raise ValueError('Email and Password must be set')
-        user = User(email=email, password=make_password(password))
-
-        user.save()
-        return user
-
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def for_client(self):
+        return {
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'meta': {
+                'created_at': self.created_at,
+                'last_login_date': self.last_login
+            }
+        }

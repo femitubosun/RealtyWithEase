@@ -3,7 +3,7 @@ from rest_framework import serializers
 from user_management.models import User
 
 
-class AuthenticateUserSerializer(serializers.Serializer):
+class AuthenticateUserRequestSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 

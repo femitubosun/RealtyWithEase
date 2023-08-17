@@ -6,14 +6,14 @@ from common.infrastructure.internal import JwtClient
 from common.system_messages import STATUS_CODE, STATUS, ERROR, MESSAGE, RESULTS, VALIDATION_ERROR, SUCCESS, \
     OPERATION_SUCCESSFUL, SOMETHING_WENT_WRONG
 from user_management.models import User
-from user_management.serializers.authentication_serializer import AuthenticateUserSerializer
+from user_management.serializers.authentication_serializers import AuthenticateUserRequestSerializer
 
 
 @api_view(['POST'])
 def authenticate_user(request):
     try:
 
-        serializer = AuthenticateUserSerializer(data=request.data)
+        serializer = AuthenticateUserRequestSerializer(data=request.data)
 
         if serializer.is_valid():
             email = request.data.get('email')
