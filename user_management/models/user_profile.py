@@ -1,4 +1,6 @@
 from django.db import models
+
+from common.system_messages import NOT_APPLICABLE
 from .user import User
 
 from common.models import BaseModel
@@ -31,3 +33,23 @@ class UserProfile(BaseModel):
 
     def __repr__(self):
         return f"<UserProfile: {User.pk}"
+
+    def for_client(self):
+        return {
+            'mobile_number': self.mobile_number or NOT_APPLICABLE,
+            'bvn': self.bvn or NOT_APPLICABLE,
+            'age': self.age or NOT_APPLICABLE,
+            'gender': self.gender or NOT_APPLICABLE,
+            'date_of_birth': self.date_of_birth or NOT_APPLICABLE,
+            'user_type': self.get_user_type(),
+            'has_agreed_to_terms_and_conditions': self.has_agreed_to_terms_and_conditions
+        }
+
+    def get_user_type(self):
+        user_type_map = {
+            self.is_agent: "agent",
+            self.is_landlord: "landlord",
+            self.is_tenant: "tenant"
+        }
+
+        return user_type_map.get(True, "default_user_type")
