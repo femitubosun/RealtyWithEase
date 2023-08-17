@@ -3,14 +3,17 @@ Add Environment variables here
 
 Reference: https://pypi.org/project/validator/
 """
+from envguardian import Env
 
-EnvironmentVariablesSchema = {
-    "SECRET_KEY": "required|string",
-    "DEBUG": "required|accepted",
-    "TOKEN_LENGTH": "required|integer",
-    "OTP_TOKEN_EXPIRES_IN_MINUTES": "required|integer",
-    "DATABASE_NAME": "required|string",
-    "DATABASE_USER": "required|string",
-    "DATABASE_HOST": "required|string",
-    "DATABASE_PORT": "required|integer",
+env_schema = {
+    "SECRET_KEY": Env.string(),
+    "DEBUG": Env.boolean(),
+    "TOKEN_LENGTH": Env.integer(),
+    "OTP_TOKEN_EXPIRES_IN_MINUTES": Env.integer(),
+
+    'DATABASE_NAME': Env.string(),
+    'DATABASE_USER': Env.string(),
+    'DATABASE_PORT': Env.integer(),
+    'DATABASE_HOST': Env.string(),
+
 }

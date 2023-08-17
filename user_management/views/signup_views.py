@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from user_management.forms import * #TenantSignupForm, AgentSignupForm, LandlordSignupForm
+from user_management.forms import TenantSignupForm, AgentSignupForm, LandlordSignupForm
 from user_management.models import User, UserProfile
 
 
@@ -38,9 +38,7 @@ def sign_up_as_tenant(request):
     return render(request, 'user_management/signup/tenant_signup.html', {"form": form})
 
 
-
 def sign_up_as_agent(request):
-
     form = AgentSignupForm()
 
     if request.method == 'POST':
@@ -58,38 +56,35 @@ def sign_up_as_agent(request):
             UserProfile.objects.create(user=created_user, gender=gender, is_agent=True)
 
             return render(request, "user_management/signup/agent_signup.html", {"form": form})
-        
+
         else:
             return render(request, "user_management/signup/agent_signup.html", {"form": filled_agent_signup_form})
 
     return render(request, 'user_management/signup/agent_signup.html', {"form": form})
 
 
-
 def sign_up_as_landlord(request):
     # Create instance of empty LandlordSignupForm
     form = LandlordSignupForm()
-    
+
     # Handle POST request
     if request.method == 'POST':
         # Create instance of LandlordSignupForm with data in a request.POST
         filled_landlord_signup_form = LandlordSignupForm(request.POST)
-        
+
         if filled_landlord_signup_form.is_valid():
             email = filled_landlord_signup_form.cleaned_data['email']
             first_name = filled_landlord_signup_form.cleaned_data['first_name']
             last_name = filled_landlord_signup_form.cleaned_data['last_name']
             password = filled_landlord_signup_form.cleaned_data['password']
             gender = filled_landlord_signup_form.cleaned_data['gender']
-            
+
             created_user = User.create_user(email, password, first_name=first_name, last_name=last_name)
             UserProfile.objects.create(user=created_user, gender=gender, is_landlord=True)
-            
+
             return render(request, "user_management/signup/landlord_signup.html", {"form": form})
         else:
-            
+
             return render(request, "user_management/signup/landlord_signup.html", {"form": filled_landlord_signup_form})
-        
+
     return render(request, 'user_management/signup/landlord_signup.html', {"form": form})
-    
-    

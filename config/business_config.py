@@ -1,6 +1,6 @@
-import os
 from datetime import datetime
 from django.utils import timezone
+from envguardian import Env
 
 
 class OtpTokenConfig:
@@ -8,13 +8,13 @@ class OtpTokenConfig:
     Otp Token Configuration
     """
 
-    LENGTH = int(os.getenv("TOKEN_LENGTH") or "6")
-    EXPIRES_IN_MINUTES = int(os.getenv("OTP_TOKEN_EXPIRES_IN_MINUTES") or "10")
+    LENGTH = Env.get('TOKEN_LENGTH')
+    EXPIRES_IN_MINUTES = Env.get('OTP_TOKEN_EXPIRES_IN_MINUTES')
 
 
 class BusinessConfig:
-    DEBUG = os.getenv("DEBUG")
-    SECRET = os.getenv("SECRET_KEY")
+    DEBUG = Env.get('DEBUG')
+    SECRET = Env.get('SECRET_KEY')
 
     OTP_TOKEN = OtpTokenConfig
 

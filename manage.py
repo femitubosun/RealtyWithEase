@@ -2,10 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from validator import validate
 from dotenv import load_dotenv
-
-from Env import EnvironmentVariablesSchema
+from envguardian import Env
 
 load_dotenv()
 
@@ -14,16 +12,7 @@ def main():
     """Run administrative tasks."""
 
     # Validate environment variables
-    environment_variables = dict(os.environ)
-
-    is_valid, _, errors = validate(
-        environment_variables, EnvironmentVariablesSchema, return_info=True
-    )
-
-    if not is_valid:
-        raise Exception(
-            f"Invalid environment variables: {errors}.\nPlease Update your .env file"
-        )
+    Env.validate()
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
     try:

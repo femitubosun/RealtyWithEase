@@ -1,7 +1,9 @@
 from pathlib import Path
 from typing import List
 
-from config import DatabaseConfig, BusinessConfig
+# from config import DatabaseConfig, BusinessConfig
+from config.business_config import BusinessConfig
+from config.database_config import DatabaseConfig
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

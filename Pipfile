@@ -13,9 +13,14 @@ commitizen = "*"
 dotenv-linter = "*"
 python-dotenv = "*"
 psycopg2-binary = "*"
-validator = "*"
+envguardian = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.11"
+
+[scripts]
+"migration:run" = "python manage.py migrate"
+"migration:make" = "python manage.py makemigrations"
+server = "python manage.py runserver"
