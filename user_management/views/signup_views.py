@@ -101,14 +101,14 @@ def sign_up_as_landlord(request):
 
         if serializer.is_valid():
             email = serializer.validated_data.get('email')
-            first_name = serializer.validated_data.get('fist_name')
+            first_name = serializer.validated_data.get('first_name')
             last_name = serializer.validated_data.get('last_name')
             password = serializer.validated_data.get('password')
             gender = serializer.validated_data.get('gender')
 
             created_user = User.objects.create_user(
                 email, password, first_name=first_name, last_name=last_name)
-            user_profile = u = UserProfile.objects.create(
+            user_profile = UserProfile.objects.create(
                 user=created_user, gender=gender, is_landlord=True)
 
             access_token = JwtClient.encode({
@@ -120,7 +120,7 @@ def sign_up_as_landlord(request):
             return Response({
                 STATUS_CODE: status.HTTP_201_CREATED,
                 STATUS: SUCCESS,
-                MESSAGE: OPERATION_SUCCESSFUL('Signup Tenant User'),
+                MESSAGE: OPERATION_SUCCESSFUL('Signup Landlord User'),
                 RESULTS: {
                     'user': {
                         **created_user.for_client(),
