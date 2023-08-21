@@ -9,6 +9,9 @@ def generate_random_string(character_length, is_upper_case, character_type):
 
     if is_upper_case:
         characters = characters.upper()
+    
+    if not is_upper_case:
+        characters = characters.lower()
 
     random_string = ''.join(secrets.choice(characters) for _ in range(character_length))
     return random_string if len(random_string) == character_length else generate_random_string(character_length, is_upper_case, character_type)
