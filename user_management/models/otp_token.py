@@ -1,7 +1,7 @@
 from django.db import models
-from common.models import BaseModel
+from core.models import BaseModel
 from config import BusinessConfig
-from common.utils import generate_future_date_time
+from core.utils import generate_future_date_time
 
 
 class OtpToken(BaseModel):
