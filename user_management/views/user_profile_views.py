@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from common.decorators.jwt_required import jwt_required
-from common.system_messages import (
+from core.decorators.jwt_required import jwt_required
+from core.system_messages import (
     STATUS_CODE,
     STATUS,
     SUCCESS,

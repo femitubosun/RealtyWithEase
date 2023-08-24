@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from common.infrastructure.internal import JwtClient
+from core.infrastructure.internal import JwtClient
 from config import BusinessConfig
 from user_management.forms import AgentSignupForm
 from user_management.models import User, UserProfile
@@ -11,7 +11,7 @@ from user_management.serializers import (
     SignupTenantRequestSerializer,
     SignupLandlordRequestSerializer,
 )
-from common.system_messages import (
+from core.system_messages import (
     STATUS_CODE,
     STATUS,
     ERROR,

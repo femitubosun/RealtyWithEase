@@ -1,9 +1,9 @@
 from django.db import models
 
-from common.system_messages import NOT_APPLICABLE
+from core.system_messages import NOT_APPLICABLE
 from .user import User
 
-from common.models import BaseModel
+from core.models import BaseModel
 
 GENDER_CHOICES = [
     ("Male", "Male"),

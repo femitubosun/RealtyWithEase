@@ -3,8 +3,8 @@ from functools import wraps
 from rest_framework import status
 from rest_framework.response import Response
 
-from common.infrastructure.internal import JwtClient
-from common.system_messages import ERROR, UNAUTHENTICATED_ERROR, STATUS_CODE, STATUS, MESSAGE
+from core.infrastructure.internal import JwtClient
+from core.system_messages import ERROR, UNAUTHENTICATED_ERROR, STATUS_CODE, STATUS, MESSAGE
 from user_management.models import User
 
 
