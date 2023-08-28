@@ -39,7 +39,7 @@ class OtpToken(BaseModel):
     
     @staticmethod
     def generate_otp_token():
-        return generate_random_string(BusinessConfig.TOKEN_LENGTH, True, 'alphanumeric')
+        return generate_random_string(BusinessConfig.OTP_TOKEN.LENGTH, True, 'alphanumeric')
         
  
     @staticmethod
