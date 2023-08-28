@@ -43,10 +43,8 @@ class OtpToken(BaseModel):
         
  
     @staticmethod
-    def generate_otp_token_expiration_time(valid_minutes):
-        current_time = BusinessConfig.get_current_date_time()
-        return current_time + timedelta(minutes=valid_minutes)
-        
+    def generate_otp_token_expiration_time():
+        return BusinessConfig.get_current_date_time() + timedelta(minutes=BusinessConfig.OTP_TOKEN.EXPIRES_IN_MINUTES)
     
 
         
