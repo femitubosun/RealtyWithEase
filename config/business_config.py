@@ -27,3 +27,5 @@ class BusinessConfig:
     @staticmethod
     def get_current_date_time():
         return datetime.now().replace(tzinfo=timezone.get_current_timezone())
+    
+    
