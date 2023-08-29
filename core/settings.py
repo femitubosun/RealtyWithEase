@@ -2,8 +2,7 @@ from pathlib import Path
 from typing import List
 
 # from config import DatabaseConfig, BusinessConfig
-from config.business_config import BusinessConfig
-from config.database_config import DatabaseConfig
+from config import BusinessConfig, DatabaseConfig, EmailConfig
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -119,3 +118,11 @@ AUTH_USER_MODEL = "user_management.User"
 
 # Custom Authentication Backend
 AUTHENTICATION_BACKENDS = ["user_management.backends.EmailBackend"]
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = EmailConfig.SMTP_HOST
+EMAIL_HOST_USER = EmailConfig.SMTP_USER
+EMAIL_HOST_PASSWORD = EmailConfig.SMTP_PASSWORD
+EMAIL_PORT = EmailConfig.SMTP_PORT
