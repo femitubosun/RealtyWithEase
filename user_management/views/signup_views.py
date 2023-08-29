@@ -3,14 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from core.infrastructure.internal import JwtClient
 from config import BusinessConfig
-from user_management.forms import AgentSignupForm
-from user_management.models import User, UserProfile, OtpToken
-from user_management.serializers import (
-    SignupTenantRequestSerializer,
-    SignupLandlordRequestSerializer,
-)
+from core.infrastructure.internal import JwtClient
 from core.system_messages import (
     STATUS_CODE,
     STATUS,
@@ -21,6 +15,12 @@ from core.system_messages import (
     SUCCESS,
     OPERATION_SUCCESSFUL,
     SOMETHING_WENT_WRONG,
+)
+from user_management.forms import AgentSignupForm
+from user_management.models import User, UserProfile, OtpToken
+from user_management.serializers import (
+    SignupTenantRequestSerializer,
+    SignupLandlordRequestSerializer,
 )
 
 

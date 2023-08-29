@@ -18,4 +18,9 @@ env_schema = {
     'DATABASE_PORT': Env.integer(),
     'DATABASE_HOST': Env.string(),
 
+    'SMTP_HOST': Env.string(),
+    'SMTP_PORT': Env.integer(),
+    'SMTP_USER': Env.string(),
+    'SMTP_PASSWORD': Env.string(),
+
 }
