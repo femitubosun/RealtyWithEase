@@ -1,7 +1,9 @@
 from django.db import models
 from core.models import BaseModel
 from config import BusinessConfig
-from core.utils import generate_future_date_time
+from core.utils import generate_future_date_time, generate_random_string
+from datetime import datetime,timedelta
+
 
 
 class OtpToken(BaseModel):
@@ -34,3 +36,15 @@ class OtpToken(BaseModel):
 
     def __str__(self):
         return f"<Otp Token: {self.email}-{self.type}>"
+    
+    @staticmethod
+    def generate_otp_token():
+        return generate_random_string(BusinessConfig.OTP_TOKEN.LENGTH, True, 'alphanumeric')
+        
+ 
+    @staticmethod
+    def generate_otp_token_expiration_time():
+        return BusinessConfig.get_current_date_time() + timedelta(minutes=BusinessConfig.OTP_TOKEN.EXPIRES_IN_MINUTES)
+    
+
+        
