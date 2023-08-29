@@ -17,3 +17,6 @@ def generate_random_string(character_length, is_upper_case, character_type):
     return random_string if len(random_string) == character_length else generate_random_string(character_length,
                                                                                                is_upper_case,
                                                                                                character_type)
+
+
+generate_random_string(8, True, 'numeric')

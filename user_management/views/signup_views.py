@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from core.infrastructure.internal import JwtClient
 from config import BusinessConfig
 from user_management.forms import AgentSignupForm
-from user_management.models import User, UserProfile
+from user_management.models import User, UserProfile, OtpToken
 from user_management.serializers import (
     SignupTenantRequestSerializer,
     SignupLandlordRequestSerializer,
@@ -138,6 +138,9 @@ def sign_up_as_landlord(request):
             )
 
             access_token = JwtClient.encode({"email": created_user.email})
+
+            token = OtpToken.generate_otp_token()
+            OtpToken.objects.create(token=token)
 
             created_user.last_login = BusinessConfig.get_current_date_time()
 
