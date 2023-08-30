@@ -21,6 +21,7 @@ from user_management.models import User, UserProfile, OtpToken
 from user_management.serializers import (
     SignupTenantRequestSerializer,
     SignupLandlordRequestSerializer,
+    SignupAgentRequestSerializer,
 )
 
 
@@ -86,36 +87,67 @@ def sign_up_as_tenant(request):
         )
 
 
+
+@api_view(["POST"])
 def sign_up_as_agent(request):
-    form = AgentSignupForm()
+    try:
+        serializer = SignupAgentRequestSerializer(data=request.data)
 
-    if request.method == "POST":
-        filled_agent_signup_form = AgentSignupForm(request.POST)
+        if serializer.is_valid():
+            email = serializer.validated_data.get("email")
+            first_name = serializer.validated_data.get("first_name")
+            last_name = serializer.validated_data.get("last_name")
+            password = serializer.validated_data.get("password")
+            gender = serializer.validated_data.get("gender")
 
-        if filled_agent_signup_form.is_valid():
-            email = filled_agent_signup_form.cleaned_data["email"]
-            first_name = filled_agent_signup_form.cleaned_data["first_name"]
-            last_name = filled_agent_signup_form.cleaned_data["last_name"]
-            password = filled_agent_signup_form.cleaned_data["password"]
-            gender = filled_agent_signup_form.cleaned_data["gender"]
-
-            created_user = User.create_user(
+            created_user = User.objects.create_user(
                 email, password, first_name=first_name, last_name=last_name
             )
-            UserProfile.objects.create(user=created_user, gender=gender, is_agent=True)
-
-            return render(
-                request, "user_management/signup/agent_signup.html", {"form": form}
+            user_profile = UserProfile.objects.create(
+                user=created_user, gender=gender, is_agent=True
             )
 
-        else:
-            return render(
-                request,
-                "user_management/signup/agent_signup.html",
-                {"form": filled_agent_signup_form},
+            access_token = JwtClient.encode({"email": created_user.email})
+
+            created_user.last_login = BusinessConfig.get_current_date_time()
+
+            created_user.save()
+
+            return Response(
+                {
+                    STATUS_CODE: status.HTTP_201_CREATED,
+                    STATUS: SUCCESS,
+                    MESSAGE: OPERATION_SUCCESSFUL("Signup Agent User"),
+                    RESULTS: {
+                        **created_user.for_client(),
+                        **user_profile.for_client(),
+                        "access_credentials": {"token": access_token},
+                    },
+                },
+                status=status.HTTP_201_CREATED,
             )
 
-    return render(request, "user_management/signup/agent_signup.html", {"form": form})
+        return Response(
+            {
+                STATUS_CODE: status.HTTP_400_BAD_REQUEST,
+                STATUS: ERROR,
+                MESSAGE: VALIDATION_ERROR,
+                RESULTS: serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    except Exception as e:
+        print("🧨 -> user_management.authenticate_user_error:", e)
+
+        return Response(
+            {
+                STATUS_CODE: status.HTTP_500_INTERNAL_SERVER_ERROR,
+                STATUS: ERROR,
+                MESSAGE: SOMETHING_WENT_WRONG,
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
 
 @api_view(["POST"])
