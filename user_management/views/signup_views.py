@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from config import BusinessConfig
-from core.infrastructure.internal import JwtClient
+from core.infrastructure.internal import JwtClient, MailClient
 from core.system_messages import (
     STATUS_CODE,
     STATUS,
@@ -16,7 +15,6 @@ from core.system_messages import (
     OPERATION_SUCCESSFUL,
     SOMETHING_WENT_WRONG,
 )
-from user_management.forms import AgentSignupForm
 from user_management.models import User, UserProfile, OtpToken
 from user_management.serializers import (
     SignupTenantRequestSerializer,
@@ -50,6 +48,13 @@ def sign_up_as_tenant(request):
 
             created_user.save()
 
+            token = OtpToken.generate_otp_token()
+
+            OtpToken.objects.create(email=created_user.email, token=token, type="email",
+                                    expires_at=OtpToken.generate_otp_token_expiration_time())
+
+            MailClient.send_welcome_email(email=created_user.email, first_name=first_name, token=token)
+
             return Response(
                 {
                     STATUS_CODE: status.HTTP_201_CREATED,
@@ -74,8 +79,8 @@ def sign_up_as_tenant(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    except Exception as e:
-        print("🧨 -> user_management.authenticate_user_error:", e)
+    except Exception as SignupTenantException:
+        print("🧨 ==> user_management.signup_views.signup_as_tenant ==>", SignupTenantException)
 
         return Response(
             {
@@ -85,7 +90,6 @@ def sign_up_as_tenant(request):
             },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
-
 
 
 @api_view(["POST"])
