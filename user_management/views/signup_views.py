@@ -175,12 +175,15 @@ def sign_up_as_landlord(request):
 
             access_token = JwtClient.encode({"email": created_user.email})
 
-            token = OtpToken.generate_otp_token()
-            OtpToken.objects.create(token=token)
-
             created_user.last_login = BusinessConfig.get_current_date_time()
 
             created_user.save()
+            
+            token = OtpToken.generate_otp_token()
+            
+            OtpToken.objects.create(email=created_user.email, token=token, type="email", expires_at=OtpToken.generate_otp_token_expiration_time())
+            
+            MailClient.send_welcome_email(email=created_user.email, first_name=first_name, token=token)
 
             return Response(
                 {
@@ -206,8 +209,8 @@ def sign_up_as_landlord(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    except Exception as e:
-        print("🧨 -> user_management.authenticate_user_error:", e)
+    except Exception as SignupLandlordException:
+        print("🧨 -> user_management.signup_as_landlord ==>", SignupLandlordException )
 
         return Response(
             {
