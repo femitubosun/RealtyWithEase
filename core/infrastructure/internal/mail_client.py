@@ -19,6 +19,8 @@ class MailClient:
 
     @staticmethod
     def send_welcome_email(email: str, first_name: str, token: str):
-        return MailClient.send_html_email("Welcome to Realty With Ease", 'tech@realtywithease.come', [email],
+        return MailClient.send_html_email("Welcome to Realty With Ease", 'tech@realtywithease.com', [email],
                                           'user_management/emails/welcome_mail.html',
                                           {"first_name": first_name, "token": token})
+
+
