@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from config import BusinessConfig
+from core.decorators import validate_request
 from core.infrastructure.internal import JwtClient, MailClient
 from core.system_messages import (
     STATUS_CODE,
@@ -24,60 +25,49 @@ from user_management.serializers import (
 
 
 @api_view(["POST"])
+@validate_request(SignupTenantRequestSerializer)
 def sign_up_as_tenant(request):
     try:
-        serializer = SignupTenantRequestSerializer(data=request.data)
+        email = request.data.get("email")
+        first_name = request.data.get("first_name")
+        last_name = request.data.get("last_name")
+        password = request.data.get("password")
+        gender = request.data.get("gender")
 
-        if serializer.is_valid():
-            email = serializer.validated_data.get("email")
-            first_name = serializer.validated_data.get("first_name")
-            last_name = serializer.validated_data.get("last_name")
-            password = serializer.validated_data.get("password")
-            gender = serializer.validated_data.get("gender")
+        created_user = User.objects.create_user(
+            email, password, first_name=first_name, last_name=last_name
+        )
+        user_profile = UserProfile.objects.create(
+            user=created_user, gender=gender, is_tenant=True
+        )
 
-            created_user = User.objects.create_user(
-                email, password, first_name=first_name, last_name=last_name
-            )
-            user_profile = UserProfile.objects.create(
-                user=created_user, gender=gender, is_tenant=True
-            )
+        access_token = JwtClient.encode({"email": created_user.email})
 
-            access_token = JwtClient.encode({"email": created_user.email})
+        created_user.last_login = BusinessConfig.get_current_date_time()
 
-            created_user.last_login = BusinessConfig.get_current_date_time()
+        created_user.save()
 
-            created_user.save()
+        token = OtpToken.generate_otp_token()
 
-            token = OtpToken.generate_otp_token()
+        OtpToken.objects.create(email=created_user.email, token=token, type="email",
+                                expires_at=OtpToken.generate_otp_token_expiration_time())
 
-            OtpToken.objects.create(email=created_user.email, token=token, type="email",
-                                    expires_at=OtpToken.generate_otp_token_expiration_time())
-
-            MailClient.send_welcome_email(email=created_user.email, first_name=first_name, token=token)
-
-            return Response(
-                {
-                    STATUS_CODE: status.HTTP_201_CREATED,
-                    STATUS: SUCCESS,
-                    MESSAGE: OPERATION_SUCCESSFUL("Signup Tenant User"),
-                    RESULTS: {
-                        **created_user.for_client(),
-                        **user_profile.for_client(),
-                        "access_credentials": {"token": access_token},
-                    },
-                },
-                status=status.HTTP_201_CREATED,
-            )
+        MailClient.send_welcome_email(email=created_user.email, first_name=first_name, token=token)
 
         return Response(
             {
-                STATUS_CODE: status.HTTP_400_BAD_REQUEST,
-                STATUS: ERROR,
-                MESSAGE: VALIDATION_ERROR,
-                RESULTS: serializer.errors,
+                STATUS_CODE: status.HTTP_201_CREATED,
+                STATUS: SUCCESS,
+                MESSAGE: OPERATION_SUCCESSFUL("Signup Tenant User"),
+                RESULTS: {
+                    **created_user.for_client(),
+                    **user_profile.for_client(),
+                    "access_credentials": {"token": access_token},
+                },
             },
-            status=status.HTTP_400_BAD_REQUEST,
+            status=status.HTTP_201_CREATED,
         )
+
 
     except Exception as SignupTenantException:
         print("🧨 ==> user_management.signup_views.signup_as_tenant ==>", SignupTenantException)
@@ -178,11 +168,12 @@ def sign_up_as_landlord(request):
             created_user.last_login = BusinessConfig.get_current_date_time()
 
             created_user.save()
-            
+
             token = OtpToken.generate_otp_token()
-            
-            OtpToken.objects.create(email=created_user.email, token=token, type="email", expires_at=OtpToken.generate_otp_token_expiration_time())
-            
+
+            OtpToken.objects.create(email=created_user.email, token=token, type="email",
+                                    expires_at=OtpToken.generate_otp_token_expiration_time())
+
             MailClient.send_welcome_email(email=created_user.email, first_name=first_name, token=token)
 
             return Response(
@@ -210,7 +201,7 @@ def sign_up_as_landlord(request):
         )
 
     except Exception as SignupLandlordException:
-        print("🧨 -> user_management.signup_as_landlord ==>", SignupLandlordException )
+        print("🧨 -> user_management.signup_as_landlord ==>", SignupLandlordException)
 
         return Response(
             {

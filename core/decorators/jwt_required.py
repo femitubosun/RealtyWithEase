@@ -20,10 +20,13 @@ def jwt_required(view_func):
         authorization = request.META.get("Authorization") or request.META.get('HTTP_AUTHORIZATION')
 
         if authorization is None:
-            return Response({
-                STATUS_CODE: status.HTTP_401_UNAUTHORIZED,
-                STATUS: ERROR,
-                MESSAGE: UNAUTHENTICATED_ERROR}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {
+                    STATUS_CODE: status.HTTP_401_UNAUTHORIZED,
+                    STATUS: ERROR,
+                    MESSAGE: UNAUTHENTICATED_ERROR,
+                },
+                status=status.HTTP_401_UNAUTHORIZED)
 
         token = authorization.replace("Bearer ", "")
 

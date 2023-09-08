@@ -1,2 +1,1 @@
-from .user_profile_views import get_user_profile
-from .authentication_views import authenticate_user
+from .change_password_views import change_password

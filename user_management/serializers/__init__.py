@@ -1,4 +1,4 @@
 from .authentication_serializers import AuthenticateUserRequestSerializer
-from .signup_serializers import SignupTenantRequestSerializer, SignupLandlordRequestSerializer, SignupAgentRequestSerializer
-
-
+from .signup_serializers import SignupTenantRequestSerializer, SignupLandlordRequestSerializer, \
+    SignupAgentRequestSerializer
+from .change_password_serializers import ChangePasswordRequestSerializer
