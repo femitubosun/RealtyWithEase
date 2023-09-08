@@ -117,6 +117,13 @@ def sign_up_as_agent(request):
 
             created_user.save()
 
+            token = OtpToken.generate_otp_token()
+
+            OtpToken.objects.create(email=created_user.email, token=token, type="email",
+                                    expires_at=OtpToken.generate_otp_token_expiration_time())
+
+            MailClient.send_welcome_email(email=created_user.email, first_name=first_name, token=token)
+
             return Response(
                 {
                     STATUS_CODE: status.HTTP_201_CREATED,
@@ -141,8 +148,8 @@ def sign_up_as_agent(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    except Exception as e:
-        print("🧨 -> user_management.authenticate_user_error:", e)
+    except Exception as SignupAgentException:
+        print("🧨 ==> user_management.signup_views.signup_as_tenant ==>", SignupAgentException)
 
         return Response(
             {
