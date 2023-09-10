@@ -5,14 +5,19 @@ from rest_framework.response import Response
 from rest_framework import status
 from user_management.models import OtpToken
 from user_management.models import User
-from core.infrastructure.internal import JwtClient, MailClient
-import random
+from core.infrastructure.internal import MailClient
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import password_validation
+
 
 from core.system_messages import (
     STATUS_CODE,
     STATUS,
     ERROR,
     MESSAGE,
+    RESULTS,
     SOMETHING_WENT_WRONG,
 )
 
@@ -20,7 +25,14 @@ from core.system_messages import (
 @api_view(['POST'])
 def send_reset_otp_email(request):
     email = request.data.get('email')
-    # TO confirm is user's account exist.
+    
+    #To validate email.
+    try:
+        validate_email(email)
+    except ValidationError:
+        return Response({"message": "Email is required in the request."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    #To confirm is user's account exist.
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
@@ -51,5 +63,42 @@ def send_reset_otp_email(request):
 
 @api_view(['POST'])
 def  reset_password(request):
-    email = request.data.get('email')
+    email = request.data.get("email")
+    otp = request.data.get("otp")
+    new_password = request.data.get("new_password")
     
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response(
+            {
+                STATUS: status.HTTP_404_NOT_FOUND,
+                MESSAGE: "User not found",
+            }
+        )
+    
+    try:
+        otp_token = OtpToken.objects.get(user=user, token=otp)
+    except OtpToken.DoesNotExist:
+        return Response(
+            {
+                STATUS: status.HTTP_400_BAD_REQUEST,
+                MESSAGE:"Invalid OTP token",    
+            }
+        )
+    
+    try:
+        validate_password(new_password, user=user, password_validators=password_validation.get_default_password_validators())
+    except ValidationError as VALIDATION_ERROR :
+        return Response(
+            {
+                STATUS_CODE: status.HTTP_400_BAD_REQUEST,
+                MESSAGE: VALIDATION_ERROR,
+            }
+        )
+
+    user.set_password(new_password)
+    user.save()
+    otp_token.delete()
+    
+    return Response({'message': 'Password reset successfully'})
