@@ -1,0 +1,48 @@
+-i https://pypi.org/simple
+argcomplete==3.1.1 ; python_version >= '3.6'
+asgiref==3.7.2 ; python_version >= '3.7'
+attrs==23.1.0 ; python_version >= '3.7'
+black==23.7.0
+cfgv==3.4.0 ; python_version >= '3.8'
+charset-normalizer==3.2.0 ; python_full_version >= '3.7.0'
+click==8.1.7 ; python_version >= '3.7'
+click-default-group==1.2.4 ; python_version >= '2.7'
+colorama==0.4.6 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6'
+commitizen==3.6.0
+decli==0.6.1 ; python_version >= '3.7'
+distlib==0.3.7
+django==4.2.4
+django-filter==23.2
+djangorestframework==3.14.0
+dotenv-linter==0.4.0
+envguardian==1.1.0
+filelock==3.12.2 ; python_version >= '3.7'
+identify==2.5.26 ; python_version >= '3.8'
+importlib-metadata==6.8.0 ; python_version >= '3.8'
+jinja2==3.1.2 ; python_version >= '3.7'
+markdown==3.4.4
+markupsafe==2.1.3 ; python_version >= '3.7'
+mypy==1.5.1
+mypy-extensions==1.0.0 ; python_version >= '3.5'
+nodeenv==1.8.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6'
+packaging==23.1 ; python_version >= '3.7'
+pathspec==0.11.2 ; python_version >= '3.7'
+platformdirs==3.10.0 ; python_version >= '3.7'
+ply==3.11
+pre-commit==3.3.3
+prompt-toolkit==3.0.39 ; python_full_version >= '3.7.0'
+psycopg2-binary==2.9.7
+pyjwt==2.8.0
+python-dotenv==1.0.0
+pytz==2023.3
+pyyaml==6.0.1 ; python_version >= '3.6'
+questionary==1.10.0 ; python_version >= '3.6' and python_version < '4.0'
+ruff==0.0.284
+setuptools==68.1.0 ; python_version >= '3.8'
+sqlparse==0.4.4 ; python_version >= '3.5'
+termcolor==2.3.0 ; python_version >= '3.7'
+tomlkit==0.12.1 ; python_version >= '3.7'
+typing-extensions==4.7.1 ; python_version >= '3.7'
+virtualenv==20.24.3 ; python_version >= '3.7'
+wcwidth==0.2.6
+zipp==3.16.2 ; python_version >= '3.8'

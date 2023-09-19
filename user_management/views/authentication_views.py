@@ -36,6 +36,7 @@ def authenticate_user(request):
             is_password_valid = user.check_password(password)
 
             if not is_password_valid:
+                print('password is invalid')
                 return Response(
                     {
                         STATUS_CODE: status.HTTP_400_BAD_REQUEST,
