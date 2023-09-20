@@ -18,6 +18,7 @@ pyjwt = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
+gunicorn = "*"
 
 [dev-packages]
 
